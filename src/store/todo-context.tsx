@@ -17,27 +17,28 @@ export const TodosContext = React.createContext<TodosContextObj>({
 const TodosContextProvider: React.FC = (props) => {
   const [todos, setTodos] = useState<Todos[]>([]);
 
-  const addTodoHandler = (todoText : any) => {
-    fetch(
-      "https://react-hooks-e13f0-default-rtdb.firebaseio.com/todoText.json",
-      {
-        method: "POST",
-        body: JSON.stringify(todoText),
-        headers: { "Content-Type": "application/json" },
-      }
-    ).then((responseData) => {
-      setTodos((prevTodos ) => [
-        ...prevTodos,
-        { id: responseData.text, ...todoText},
-      ]);
-    });
-};
-  //   const newTodo = new Todos(todoText);
+  const addTodoHandler = (todoText: any) => {
+    fetch(`/todos`, {
+      method: 'POST',
+      body: JSON.stringify(todoText),
+      headers: { 'Content-Type': 'application/json' ,
+              'Authorization': 'f2bc0c85-b373-468a-9fd3-d1a2f2782609'
+    }})
+      .then(response => {
+        return response.json();
+      })
+      .then(responseData => {
+       setTodos(prevTodos => [
+          ...prevTodos,
+          { id: responseData.text, ...todoText }
+        ])
+      });
+    const newTodo = new Todos(todoText);
 
-  //   setTodos((prevTodos) => {
-  //     return prevTodos.concat(newTodo);
-  //   });
-  // };
+    setTodos((prevTodos) => {
+      return prevTodos.concat(newTodo);
+    });
+  };
 
   const removeTodoHandler = (todoId: string) => {
     setTodos((prevTodos) => {

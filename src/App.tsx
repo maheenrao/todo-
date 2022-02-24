@@ -2,7 +2,6 @@ import React from 'react';
 import NewTodo from './components/NewTodo';
 import './App.css';
 import Todo from './components/Todo';
-import Todos from './models/Todos'
 import TodosContextProvider from './store/todo-context';
 
 
@@ -28,7 +27,6 @@ function App() {
     <TodosContextProvider>
       <NewTodo />
       <Todo/>
-
     </TodosContextProvider>
   );
 }
